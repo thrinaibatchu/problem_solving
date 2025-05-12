@@ -1,24 +1,18 @@
 class Solution:
-    def combine(self, n: int, k: int) -> List[List[int]]:
-        result = []
-        def helper(index, slate):
-            #Backtracking case
-            if len(slate) == k:
-                result.append(slate[:])
-                return
+    def helper(self, slate, start, n, k, result):
+        #Base case
+        if len(slate) == k:
+            result.append(slate[:])
+            return
 
-            #Base case
-            if index == n+1:
-                return
-
-            #Recursive case
-            #Exclude
-            helper(index+1, slate)
-
-            #Include
-            slate.append(index)
-            helper(index+1, slate)
+        #Recursion case
+        for i in range(start, n+1):
+            slate.append(i)
+            self.helper(slate, i+1, n, k, result)
             slate.pop()
 
-        helper(1, [])
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        result=[]
+        self.helper([], 1, n, k, result)
         return result
+        
